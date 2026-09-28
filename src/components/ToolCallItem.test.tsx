@@ -93,13 +93,13 @@ function makeWorkerSession(toolCalls: CodexToolCall[]): CodexSession {
 describe("ToolCallItem", () => {
   it("renders the tool name in the header", () => {
     render(<ToolCallItem tool={makeTool()} expanded={false} onToggle={vi.fn()} />);
-    expect(screen.getByText("shell")).toBeInTheDocument();
+    expect(screen.getByText("Run command")).toBeInTheDocument();
   });
 
   it("calls onToggle when the header is clicked", () => {
     const onToggle = vi.fn();
     render(<ToolCallItem tool={makeTool()} expanded={false} onToggle={onToggle} />);
-    fireEvent.click(screen.getByText("shell").closest(".tool-call__header")!);
+    fireEvent.click(screen.getByText("Run command").closest(".tool-call__header")!);
     expect(onToggle).toHaveBeenCalledOnce();
   });
 

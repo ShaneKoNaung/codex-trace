@@ -4,6 +4,7 @@ import type { TurnSummary } from "../../shared/types";
 import { formatDuration, formatTokens } from "../../shared/format";
 import { formatExactTime } from "../lib/format";
 import { OngoingDots } from "./OngoingDots";
+import { SessionOverview } from "./SessionOverview";
 import {
   UserIcon,
   CodexIcon,
@@ -254,28 +255,31 @@ export function TurnList({ summaries, selectedIndex, onSelectTurn }: TurnListPro
   }
 
   return (
-    <Virtuoso<unknown, TurnRowContext>
-      ref={virtuosoRef}
-      className="message-list"
-      totalCount={summaries.length}
-      // Keep the view pinned to the newest turn while a session is live, but
-      // only when the user is already at the bottom.
-      followOutput="smooth"
-      // Render rows this far outside the viewport so a row is built before it
-      // scrolls into view, rather than visibly appearing at the viewport edge.
-      increaseViewportBy={{ top: 600, bottom: 600 }}
-      rangeChanged={handleRangeChanged}
-      computeItemKey={(index) => summaries[index]?.turn_id ?? index}
-      context={{
-        summaries,
-        selectedIndex,
-        expandedUsers,
-        expandedCodex,
-        onToggleUser: toggleUser,
-        onCodexClick: handleCodexClick,
-        onSelectTurn,
-      }}
-      itemContent={renderTurnRow}
-    />
+    <div className="turn-list-view">
+      <SessionOverview summaries={summaries} onSelectTurn={onSelectTurn} />
+      <Virtuoso<unknown, TurnRowContext>
+        ref={virtuosoRef}
+        className="message-list"
+        totalCount={summaries.length}
+        // Keep the view pinned to the newest turn while a session is live, but
+        // only when the user is already at the bottom.
+        followOutput="smooth"
+        // Render rows this far outside the viewport so a row is built before it
+        // scrolls into view, rather than visibly appearing at the viewport edge.
+        increaseViewportBy={{ top: 600, bottom: 600 }}
+        rangeChanged={handleRangeChanged}
+        computeItemKey={(index) => summaries[index]?.turn_id ?? index}
+        context={{
+          summaries,
+          selectedIndex,
+          expandedUsers,
+          expandedCodex,
+          onToggleUser: toggleUser,
+          onCodexClick: handleCodexClick,
+          onSelectTurn,
+        }}
+        itemContent={renderTurnRow}
+      />
+    </div>
   );
 }

@@ -117,7 +117,7 @@ describe("TurnList", () => {
 
   it("shows duration stat when duration_ms is set", () => {
     renderList([makeSummary()]);
-    expect(screen.getByText("1m")).toBeInTheDocument();
+    expect(screen.getAllByText("1m").length).toBeGreaterThan(0);
   });
 
   it("calls onSelectTurn with the turn index when Detail button is clicked", () => {

@@ -4,6 +4,7 @@ import { ComplementaryItem } from "./ComplementaryItem";
 import { OngoingDots } from "./OngoingDots";
 import { BackIcon, CodexIcon } from "./Icons";
 import { MarkdownRenderer } from "./MarkdownRenderer";
+import { TurnInsights } from "./TurnInsights";
 import { shortModel, formatExactTime } from "../lib/format";
 import { getContextColor, getModelColor } from "../lib/theme";
 import { contextRemainingPercent, formatTokens, formatDuration } from "../../shared/format";
@@ -103,6 +104,8 @@ export function TurnDetail({
 
       <div className="turn-detail__body">
         <div className="turn-detail__content">
+          <TurnInsights turn={turn} />
+
           {turn.error && (
             <div className="turn-detail__section turn-detail__section--error">
               <div className="turn-detail__section-label">Error</div>
@@ -148,6 +151,7 @@ export function TurnDetail({
                     onToggle={() => onToggle(item.index)}
                     isWorkerOpen={item.tool.call_id === openWorkerCallId}
                     onOpenWorker={onOpenWorkerPanel}
+                    sequenceNumber={item.index + 1}
                   />
                 ),
               )}
